@@ -26,12 +26,14 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfW-w1-5IK">
                                 <rect key="frame" x="202" y="250" width="197" height="30"/>
                                 <state key="normal" title="Este es el botón"/>
+                                <connections>
+                                    <action selector="boton1:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mS9-2q-qxb"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="boton1" destination="cfW-w1-5IK" id="nuo-C3-tga"/>
                         <outlet property="label1" destination="puh-3A-JS9" id="hMV-lT-BfZ"/>
                     </connections>
                 </viewController>

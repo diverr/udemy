@@ -8,29 +8,76 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
     @IBOutlet weak var map: MKMapView!
     
+    var locationManager = CLLocationManager()
+    
+    func action(gestureRecognizer: UIGestureRecognizer) {
+        var touchPoint = gestureRecognizer.locationInView(self.map)
+        
+        var newCoordinate: CLLocationCoordinate2D = self.map.convertPoint(touchPoint, toCoordinateFromView: self.map)
+        
+        var annotation = MKPointAnnotation()
+        annotation.coordinate = newCoordinate
+        annotation.title = "Nuevo punto"
+        annotation.subtitle = "Creado por el usuario"
+        map.addAnnotation(annotation)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
-        var latitude: CLLocationDegrees = 40.4
-        var longitude: CLLocationDegrees = -3.7
-        var latDelta: CLLocationDegrees = 0.01
-        var lonDelta: CLLocationDegrees = 0.01
+        let latitude: CLLocationDegrees = 40.4
+        let longitude: CLLocationDegrees = -3.7
         
-        var span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        centerMap(latitude, longitude: longitude)
         
-        var location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
         
-        var region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = location
+        annotation.title = "Título de la chincheta"
+        annotation.subtitle = "Subtítulo de la chincheta"
+        map.addAnnotation(annotation)
+        
+        let lgpr = UILongPressGestureRecognizer(target: self, action: "action:")
+        lgpr.minimumPressDuration = 2
+        map.addGestureRecognizer(lgpr)
+        
+        
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation = locations[0]
+        let latitude = userLocation.coordinate.latitude
+        let longitude = userLocation.coordinate.longitude
+        
+        centerMap(latitude, longitude: longitude)
+        
+        
+        
+    }
+    
+    func centerMap(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let latDelta: CLLocationDegrees = 0.01
+        let lonDelta: CLLocationDegrees = 0.01
+        
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(latDelta, lonDelta)
+        
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
         
         map.setRegion(region, animated: true)
-        
-        
     }
 
     override func didReceiveMemoryWarning() {

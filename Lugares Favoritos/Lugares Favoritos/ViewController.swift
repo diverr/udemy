@@ -19,15 +19,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.delegate = self
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
+        if activePlace == -1 {
+            manager.desiredAccuracy = kCLLocationAccuracyBest
+            manager.delegate = self
+            manager.requestWhenInUseAuthorization()
+            manager.startUpdatingLocation()
+        } else {
+            let latitude = NSString(string: places[activePlace]["lat"]!).doubleValue
+            let longitude = NSString(string: places[activePlace]["lon"]!).doubleValue
+            
+            self.centerMap(latitude, longitude: longitude)
+            self.addPoint(latitude, longitude: longitude, title: places[activePlace]["name"]!)
+        }
+        
+        
         
         let lpgr = UILongPressGestureRecognizer(target: self, action: "longPressDetected:")
         lpgr.minimumPressDuration = 2
         
         self.map.addGestureRecognizer(lpgr)
+    }
+    
+    func centerMap(latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
+        let latDelta = 0.01
+        let lonDelta = 0.01
+        let span = MKCoordinateSpanMake(latDelta, lonDelta)
+        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        let region = MKCoordinateRegionMake(coordinate, span)
+        self.map.setRegion(region, animated: true)
+    }
+    
+    func addPoint(latitude: CLLocationDegrees, longitude: CLLocationDegrees, title: String) {
+        let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = title
+        self.map.addAnnotation(annotation)
     }
     
     func longPressDetected(gestureRecognizer: UIGestureRecognizer) {
@@ -52,12 +79,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     title = "Desconocido"
                 }
                 
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = newCoordinate
-                annotation.title = title
-                self.map.addAnnotation(annotation)
+                self.addPoint(newCoordinate.latitude, longitude: newCoordinate.longitude, title: title)
                 
-                places.append(["name": title, "lat": "\(newCoordinate.latitude)", "long": "\(newCoordinate.longitude)"])
+                places.append(["name": title, "lat": "\(newCoordinate.latitude)", "lon": "\(newCoordinate.longitude)"])
                 
             })
             
@@ -75,12 +99,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if let userLocation = locations.first {
             let latitude = userLocation.coordinate.latitude
             let longitude = userLocation.coordinate.longitude
-            let latDelta = 0.01
-            let lonDelta = 0.01
-            let span = MKCoordinateSpanMake(latDelta, lonDelta)
-            let coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-            let region = MKCoordinateRegionMake(coordinate, span)
-            self.map.setRegion(region, animated: true)
+            self.centerMap(latitude, longitude: longitude)
         }
     }
 

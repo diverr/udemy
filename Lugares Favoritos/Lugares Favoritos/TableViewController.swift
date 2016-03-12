@@ -9,13 +9,14 @@
 import UIKit
 
 var places = [Dictionary<String, String>]()
+var activePlace = -1
 
 class TableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        places.append(["name": "Taj Mahal", "lat": "27.175277", "long": "78.042128"])
+        places.append(["name": "Taj Mahal", "lat": "27.175277", "lon": "78.042128"])
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -55,6 +56,11 @@ class TableViewController: UITableViewController {
 
         return cell
     }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        activePlace = indexPath.row
+        return indexPath
+    }
 
 
     /*
@@ -92,14 +98,17 @@ class TableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "addPoint" {
+            activePlace = -1
+        }
     }
-    */
+   
 
 }

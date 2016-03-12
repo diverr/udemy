@@ -22,6 +22,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="showPointInMap" id="cKP-qS-aXt"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -32,7 +35,7 @@
                     <navigationItem key="navigationItem" title="Lista" id="483-gB-WYb">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="puh-OY-F3z">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="Z3f-7E-hdP"/>
+                                <segue destination="BYZ-38-t0r" kind="show" identifier="addPoint" id="Z3f-7E-hdP"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -90,4 +93,7 @@
             <point key="canvasLocation" x="1301" y="1119"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cKP-qS-aXt"/>
+    </inferredMetricsTieBreakers>
 </document>

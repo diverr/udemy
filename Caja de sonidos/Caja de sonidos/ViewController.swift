@@ -20,7 +20,7 @@ class ViewController: UIViewController {
             
             let randomNumber = Int(arc4random_uniform(UInt32(sounds.count)))
             
-            if let audioPath = NSBundle.mainBundle().pathForResource(self.sounds[randomNumber], offType: "mp3") {
+            if let audioPath = NSBundle.mainBundle().pathForResource(self.sounds[randomNumber], ofType: "mp3") {
                 do {
                     self.player = try AVAudioPlayer(contentsOfURL: NSURL(fileURLWithPath: audioPath))
                     self.player.play()

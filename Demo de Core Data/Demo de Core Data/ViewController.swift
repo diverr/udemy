@@ -19,22 +19,28 @@ class ViewController: UIViewController {
         
         let context: NSManagedObjectContext = appDel.managedObjectContext
         
-        let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
+        //let newUser = NSEntityDescription.insertNewObjectForEntityForName("Users", inManagedObjectContext: context)
         
-        newUser.setValue("David", forKey: "username")
-        newUser.setValue("pass", forKey: "password")
+        //newUser.setValue("Otro más2", forKey: "username")
+        //newUser.setValue("23234234234", forKey: "password")
         
-        do {
-            try context.save()
-        } catch let error {
-            print(error)
-        }
+        //_ = try? context.save()
         
         let request = NSFetchRequest(entityName: "Users")
         
-        let results = try? context.executeFetchRequest(request)
-        
-        print(results)
+        if let results = try? context.executeFetchRequest(request) where results.count > 0 {
+            for result in results {
+                if let username = result.valueForKey("username"),
+                    let password = result.valueForKey("password")
+                    where username as? String == "David" {
+                    print(password)
+                        
+                    context.deleteObject(result as! NSManagedObject)
+                }
+            }
+            
+            _ = try? context.save()
+        }
         
     
     }

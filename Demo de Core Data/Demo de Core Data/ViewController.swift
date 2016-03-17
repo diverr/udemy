@@ -27,9 +27,11 @@ class ViewController: UIViewController {
         //_ = try? context.save()
         
         let request = NSFetchRequest(entityName: "Users")
+        request.predicate = NSPredicate(format: "username = %@", "David")
         
         if let results = try? context.executeFetchRequest(request) where results.count > 0 {
             for result in results {
+                /*
                 if let username = result.valueForKey("username"),
                     let password = result.valueForKey("password")
                     where username as? String == "David" {
@@ -37,6 +39,9 @@ class ViewController: UIViewController {
                         
                     context.deleteObject(result as! NSManagedObject)
                 }
+                */
+                
+                print(result.valueForKey("username"))
             }
             
             _ = try? context.save()

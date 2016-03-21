@@ -6,7 +6,7 @@
             <userInfo/>
         </attribute>
         <attribute name="publishedDate" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="tittle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <userInfo/>
     </entity>
     <elements>

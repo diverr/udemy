@@ -19,6 +19,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let appDel = UIApplication.sharedApplication().delegate as! AppDelegate
+        let context = appDel.managedObjectContext
+        
         let url = NSURL(string: "https://www.googleapis.com/blogger/v3/blogs/2399953/posts?key=AIzaSyBSNwnnGIysjp5mC15jtIacnhjRs8RZJcI")
         let task = NSURLSession.sharedSession().dataTaskWithURL(url!) { (data, response, error) -> Void in
             if error != nil {
@@ -26,8 +29,52 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             }
             else  {
                 if let jsonResult = try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) {
+                    
+                    
+                    let request = NSFetchRequest(entityName: "BlogItems")
+                    let results = try? context.executeFetchRequest(request)
+                    for blogItem in results! {
+                        context.deleteObject(blogItem as! NSManagedObject)
+                    }
+                    
+                    
+                    var posts = [[String: String]]()
+                    
                     let items = jsonResult["items"] as! [NSDictionary]
-                    print(items[0]["author"])
+                    
+                    for item in items {
+                        let authorDictonary = item["author"] as! NSDictionary
+                        let author = authorDictonary["displayName"] as! String
+                        let content = item["content"] as! String
+                        let title = item["title"] as! String
+                        let publishedDate = item["published"] as! String
+                        
+                        var newPost = [String: String]()
+                        newPost["author"] = author
+                        newPost["title"] = title
+                        newPost["publishedDate"] = publishedDate
+                        newPost["content"] = content
+                        
+                        posts.append(newPost)
+                        
+                        let newBlogItem = NSEntityDescription.insertNewObjectForEntityForName("BlogItems", inManagedObjectContext: context)
+                        newBlogItem.setValue(author, forKey: "author")
+                        newBlogItem.setValue(title, forKey: "title")
+                        newBlogItem.setValue(publishedDate, forKey: "publishedDate")
+                        newBlogItem.setValue(content, forKey: "content")
+                        
+                    }
+                    
+                    do {
+                        try context.save()
+                    } catch let error {
+                        print(error)
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
+                    })
+                    
                 }
             }
         }
@@ -75,9 +122,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-            //let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
+            let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                //controller.detailItem = object
+                controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -87,26 +134,24 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        //return self.fetchedResultsController.sections?.count ?? 0
-        return 1
+        return self.fetchedResultsController.sections?.count ?? 0
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //let sectionInfo = self.fetchedResultsController.sections![section]
-        //return sectionInfo.numberOfObjects
-        return 3
+        let sectionInfo = self.fetchedResultsController.sections![section]
+        return sectionInfo.numberOfObjects
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        //self.configureCell(cell, atIndexPath: indexPath)
-        cell.textLabel?.text = "Entrada del blog"
+        self.configureCell(cell, atIndexPath: indexPath)
         return cell
     }
 
     func configureCell(cell: UITableViewCell, atIndexPath indexPath: NSIndexPath) {
         let object = self.fetchedResultsController.objectAtIndexPath(indexPath)
-        cell.textLabel!.text = object.valueForKey("timeStamp")!.description
+        cell.textLabel!.text = object.valueForKey("title")!.description
+        cell.detailTextLabel?.text = object.valueForKey("author")!.description
     }
 
     // MARK: - Fetched results controller
@@ -125,7 +170,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timeStamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "publishedDate", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         

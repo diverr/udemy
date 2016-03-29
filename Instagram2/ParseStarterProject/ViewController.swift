@@ -11,11 +11,24 @@ import UIKit
 import Parse
 
 class ViewController: UIViewController {
-
+    
+    var loading = UIActivityIndicatorView()
+    
+    var signUpActive = true
     
     @IBOutlet weak var username: UITextField!
     
     @IBOutlet weak var password: UITextField!
+    
+    
+    @IBOutlet weak var signUpToggleButton: UIButton!
+    
+    @IBOutlet weak var alreadyRegistered: UILabel!
+    
+    @IBOutlet weak var signUpLabel: UILabel!
+    
+    @IBOutlet weak var signUpButton: UIButton!
+    
     
     @available(iOS 8.0, *)
     func displayAlert(title: String, message: String) {
@@ -36,26 +49,76 @@ class ViewController: UIViewController {
         }
         else {
             
-            let user = PFUser()
-            user.username = self.username.text
-            user.password = self.password.text
+            // loader
+            loading.center = self.view.center
+            loading.hidesWhenStopped = true
+            loading.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+            loading.startAnimating()
             
-            user.signUpInBackgroundWithBlock {
-                (succeeded: Bool, signUpError: NSError?) -> Void in
+            self.view.addSubview(loading)
+            
+            UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+            
+            
+            
+            if signUpActive == true {
                 
-                if signUpError == nil {
-                    print("Usuario registrado")
-                }
-                else {
-                    if let errorString = signUpError!.userInfo["error"] as? NSString {
-                        self.displayAlert("Error en formulario", message: errorString as String)
+                let user = PFUser()
+                user.username = self.username.text
+                user.password = self.password.text
+                
+                user.signUpInBackgroundWithBlock {
+                    (succeeded: Bool, signUpError: NSError?) -> Void in
+                    
+                    // ocultamos el loader
+                    self.loading.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    if signUpError == nil {
+                        print("Usuario registrado")
                     }
                     else {
-                        self.displayAlert("Error en formulario", message: "Por favor reinténtalo")
+                        if let errorString = signUpError!.userInfo["error"] as? NSString {
+                            self.displayAlert("Error en formulario", message: errorString as String)
+                        }
+                        else {
+                            self.displayAlert("Error en formulario", message: "Por favor reinténtalo")
+                        }
+                    }
+                    
+                }
+                
+            }
+            else {
+                
+                PFUser.logInWithUsernameInBackground(self.username.text!, password: self.password.text!) {
+                    (user: PFUser?, loginError: NSError?) -> Void in
+                    
+                    // ocultamos el loader
+                    self.loading.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    if user != nil {
+                        print("Usuario logueado")
+                    } else {
+                        
+                        if let errorString = loginError!.userInfo["error"] as? NSString {
+                            self.displayAlert("Error al acceder", message: errorString as String)
+                        }
+                        else {
+                            self.displayAlert("Error al acceder", message: "Por favor reinténtalo")
+                        }
+                        
                     }
                 }
                 
             }
+            
+            
+            
+            
+            
+            
             
         }
         
@@ -64,6 +127,31 @@ class ViewController: UIViewController {
         }
         
     }
+    
+    
+    
+    @IBAction func signUpToggle(sender: AnyObject) {
+        if signUpActive == true {
+            // Estoy en modo registro, voy a modo acceso
+            self.signUpToggleButton.setTitle("Registrarse", forState: .Normal)
+            self.alreadyRegistered.text = "¿No registrado?"
+            self.signUpButton.setTitle("Acceder", forState: .Normal)
+            self.signUpLabel.text = "Usa el formulario inferior para acceder"
+            
+            signUpActive = false
+        }
+        else {
+            // Estoy en modo acceso, voy a modo registro
+            self.signUpToggleButton.setTitle("Acceder", forState: .Normal)
+            self.alreadyRegistered.text = "¿Ya registrado?"
+            self.signUpButton.setTitle("Registrar  nuevo usuario", forState: .Normal)
+            self.signUpLabel.text = "Usa el formulario inferior para registrarte"
+            
+            signUpActive = true
+        }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

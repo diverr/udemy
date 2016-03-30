@@ -154,8 +154,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
-        
+        if PFUser.currentUser() != nil {
+            self.performSegueWithIdentifier("jumpToUsersTable", sender: self)
+        }
     }
 
     override func didReceiveMemoryWarning() {

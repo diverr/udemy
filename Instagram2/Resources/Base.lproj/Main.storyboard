@@ -147,11 +147,91 @@
                             <outlet property="delegate" destination="FUm-Ht-mW6" id="x7C-9f-qhT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="1y5-NZ-fYb"/>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="1y5-NZ-fYb">
+                        <barButtonItem key="rightBarButtonItem" title="Publicar" id="Anp-Pp-vvW">
+                            <connections>
+                                <segue destination="en3-Mh-eY2" kind="show" id="xPn-gy-yr6"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ili-wp-E1v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2097" y="444"/>
+        </scene>
+        <!--Publicar foto-->
+        <scene sceneID="CQc-We-7Hd">
+            <objects>
+                <viewController title="Publicar foto" id="en3-Mh-eY2" customClass="PostViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iIL-ym-KzF"/>
+                        <viewControllerLayoutGuide type="bottom" id="IcY-Oz-dD4"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FeJ-eL-AQ3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Silueta-MAS.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="OJ8-aQ-7hz">
+                                <rect key="frame" x="200" y="79" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="0h3-op-Rip"/>
+                                    <constraint firstAttribute="height" constant="200" id="mVk-vy-ah7"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XPq-FY-qlZ">
+                                <rect key="frame" x="239" y="288" width="122" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="122" id="68x-0p-L9Z"/>
+                                    <constraint firstAttribute="height" constant="30" id="FWs-kz-bwa"/>
+                                </constraints>
+                                <state key="normal" title="Elegir una imagen"/>
+                                <connections>
+                                    <action selector="postImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="dj5-ty-Css"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ef4-Yl-IAu">
+                                <rect key="frame" x="170" y="326" width="260" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="ceT-RH-gcE"/>
+                                    <constraint firstAttribute="height" constant="30" id="hne-dN-hDX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOU-lQ-ENm">
+                                <rect key="frame" x="239" y="376" width="122" height="30"/>
+                                <color key="backgroundColor" red="0.0035772788380045162" green="0.13876536596717171" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="122" id="09a-rE-1rX"/>
+                                    <constraint firstAttribute="height" constant="30" id="GBs-x9-GJk"/>
+                                </constraints>
+                                <color key="tintColor" red="0.0" green="0.93847690022581176" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Publicar"/>
+                                <connections>
+                                    <action selector="chooseImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="i7J-vt-AIe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XPq-FY-qlZ" firstAttribute="top" secondItem="OJ8-aQ-7hz" secondAttribute="bottom" constant="9" id="7x4-bZ-R36"/>
+                            <constraint firstItem="ef4-Yl-IAu" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="9gg-Zj-iJi"/>
+                            <constraint firstItem="OJ8-aQ-7hz" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="EON-rz-kky"/>
+                            <constraint firstItem="xOU-lQ-ENm" firstAttribute="top" secondItem="ef4-Yl-IAu" secondAttribute="bottom" constant="20" id="TjZ-Zg-ffn"/>
+                            <constraint firstItem="xOU-lQ-ENm" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="W4b-tg-prD"/>
+                            <constraint firstItem="XPq-FY-qlZ" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="gxV-35-Fre"/>
+                            <constraint firstItem="ef4-Yl-IAu" firstAttribute="top" secondItem="XPq-FY-qlZ" secondAttribute="bottom" constant="8" id="mQF-nr-Z5V"/>
+                            <constraint firstItem="OJ8-aQ-7hz" firstAttribute="top" secondItem="iIL-ym-KzF" secondAttribute="bottom" constant="15" id="yad-7d-79g"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageToPost" destination="OJ8-aQ-7hz" id="ult-LG-oIk"/>
+                        <outlet property="shareText" destination="ef4-Yl-IAu" id="299-IO-oGv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sb8-Mi-JFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2763" y="444"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eJS-zU-Vu3">
@@ -170,4 +250,7 @@
             <point key="canvasLocation" x="1278" y="443"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Silueta-MAS.jpg" width="420" height="280"/>
+    </resources>
 </document>

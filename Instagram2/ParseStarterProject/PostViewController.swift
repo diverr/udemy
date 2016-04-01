@@ -2,14 +2,13 @@
 //  PostViewController.swift
 //  Instagram
 //
-//  Created by David Santiago on 31/3/16.
+//  Created by David Santiago on 1/4/16.
 //  Copyright © 2016 Parse. All rights reserved.
 //
 
 import UIKit
 
-class PostViewController: ViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-
+class PostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     var photoSelected: Bool = false
     
@@ -22,7 +21,7 @@ class PostViewController: ViewController, UINavigationControllerDelegate, UIImag
     }
     
     @IBAction func chooseImage(sender: AnyObject) {
-        var picker = UIImagePickerController()
+        let picker = UIImagePickerController()
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         picker.allowsEditing = false
         picker.delegate = self
@@ -35,7 +34,7 @@ class PostViewController: ViewController, UINavigationControllerDelegate, UIImag
         self.dismissViewControllerAnimated(true, completion: nil)
         self.photoSelected = true
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

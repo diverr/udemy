@@ -186,7 +186,7 @@
                                 </constraints>
                                 <state key="normal" title="Elegir una imagen"/>
                                 <connections>
-                                    <action selector="postImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="dj5-ty-Css"/>
+                                    <action selector="chooseImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="sc6-OK-Atc"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ef4-Yl-IAu">
@@ -208,7 +208,7 @@
                                 <color key="tintColor" red="0.0" green="0.93847690022581176" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Publicar"/>
                                 <connections>
-                                    <action selector="chooseImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="i7J-vt-AIe"/>
+                                    <action selector="postImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="MTs-vm-7Ij"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -225,8 +225,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageToPost" destination="OJ8-aQ-7hz" id="ult-LG-oIk"/>
-                        <outlet property="shareText" destination="ef4-Yl-IAu" id="299-IO-oGv"/>
+                        <outlet property="imageToPost" destination="OJ8-aQ-7hz" id="xl4-1j-17X"/>
+                        <outlet property="shareText" destination="ef4-Yl-IAu" id="lA0-gp-h2z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sb8-Mi-JFj" userLabel="First Responder" sceneMemberID="firstResponder"/>

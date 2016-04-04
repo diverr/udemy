@@ -84,6 +84,12 @@ class PostViewController: UIViewController, UINavigationControllerDelegate, UIIm
         self.presentViewController(picker, animated: true, completion: nil)
     }
     
+    @IBAction func logOut(sender: AnyObject) {
+        PFUser.logOut()
+        self.performSegueWithIdentifier("logout", sender: self)
+    }
+    
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         self.imageToPost.image = image
         self.dismissViewControllerAnimated(true, completion: nil)

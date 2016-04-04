@@ -21,6 +21,8 @@
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
 		DE893EEE1CAD081F00BE523F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE893EED1CAD081F00BE523F /* PostViewController.swift */; };
 		DE893EF01CAD095500BE523F /* Silueta-MAS.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DE893EEF1CAD095500BE523F /* Silueta-MAS.jpg */; };
+		DEB97DD71CB2301F001E4C9B /* FeedTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB97DD61CB2301F001E4C9B /* FeedTableTableViewController.swift */; };
+		DEB97DDB1CB23129001E4C9B /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB97DDA1CB23129001E4C9B /* FeedCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		DE893EED1CAD081F00BE523F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		DE893EEF1CAD095500BE523F /* Silueta-MAS.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Silueta-MAS.jpg"; sourceTree = "<group>"; };
+		DEB97DD61CB2301F001E4C9B /* FeedTableTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableTableViewController.swift; sourceTree = "<group>"; };
+		DEB97DDA1CB23129001E4C9B /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,8 @@
 				63C461201CA1B28300E0A6F0 /* Launch Screen.storyboard */,
 				634210441CAB9B2200F2AFA2 /* UsersTableViewController.swift */,
 				DE893EED1CAD081F00BE523F /* PostViewController.swift */,
+				DEB97DD61CB2301F001E4C9B /* FeedTableTableViewController.swift */,
+				DEB97DDA1CB23129001E4C9B /* FeedCell.swift */,
 			);
 			name = Instagram;
 			path = ParseStarterProject;
@@ -158,6 +164,7 @@
 				TargetAttributes = {
 					81BA81441A49DA1800E65899 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 2D3N8QKRJK;
 					};
 				};
 			};
@@ -202,6 +209,8 @@
 				81BA814D1A49DA1800E65899 /* ViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				634210451CAB9B2200F2AFA2 /* UsersTableViewController.swift in Sources */,
+				DEB97DD71CB2301F001E4C9B /* FeedTableTableViewController.swift in Sources */,
+				DEB97DDB1CB23129001E4C9B /* FeedCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +313,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -313,6 +324,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.davidsantiago.Instagram;
 				PRODUCT_NAME = Instagram;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -321,6 +333,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -330,6 +344,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = net.davidsantiago.Instagram;
 				PRODUCT_NAME = Instagram;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

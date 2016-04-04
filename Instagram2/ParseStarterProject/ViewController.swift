@@ -76,6 +76,7 @@ class ViewController: UIViewController {
                     
                     if signUpError == nil {
                         print("Usuario registrado")
+                        self.performSegueWithIdentifier("jumpToUsersTable", sender: self)
                     }
                     else {
                         if let errorString = signUpError!.userInfo["error"] as? NSString {
@@ -99,7 +100,8 @@ class ViewController: UIViewController {
                     UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     
                     if user != nil {
-                        print("Usuario logueado")
+                        print("El usuario ha accedido")
+                        self.performSegueWithIdentifier("jumpToUsersTable", sender: self)
                     } else {
                         
                         if let errorString = loginError!.userInfo["error"] as? NSString {
@@ -151,6 +153,9 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func didLogOut(segue: UIStoryboardSegue) {
+        print("Logout")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

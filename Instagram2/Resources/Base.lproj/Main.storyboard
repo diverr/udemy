@@ -121,10 +121,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="wLe-Tz-YSE" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="565" y="445"/>
         </scene>
-        <!--Root View Controller-->
+        <!--A quien sigo-->
         <scene sceneID="k6R-gS-rkQ">
             <objects>
                 <tableViewController id="FUm-Ht-mW6" customClass="UsersTableViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
@@ -147,7 +148,12 @@
                             <outlet property="delegate" destination="FUm-Ht-mW6" id="x7C-9f-qhT"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="1y5-NZ-fYb">
+                    <navigationItem key="navigationItem" title="A quien sigo" id="1y5-NZ-fYb">
+                        <barButtonItem key="leftBarButtonItem" title="Publicaciones" id="WR1-jm-Ang">
+                            <connections>
+                                <segue destination="fbX-o5-1vI" kind="show" id="Ioz-im-sf9"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Publicar" id="Anp-Pp-vvW">
                             <connections>
                                 <segue destination="en3-Mh-eY2" kind="show" id="xPn-gy-yr6"/>
@@ -211,20 +217,36 @@
                                     <action selector="postImage:" destination="en3-Mh-eY2" eventType="touchUpInside" id="MTs-vm-7Ij"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pD9-ZN-66f">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pD9-ZN-66f">
                                 <rect key="frame" x="290" y="423" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="EaQ-p2-fOz"/>
                                     <constraint firstAttribute="height" constant="20" id="uVF-yl-hh9"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9wP-uO-jX5">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="6bq-KP-wu1"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Desconectarse" id="KEE-ln-nkv">
+                                        <connections>
+                                            <action selector="logOut:" destination="en3-Mh-eY2" id="glJ-sc-oBM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XPq-FY-qlZ" firstAttribute="top" secondItem="OJ8-aQ-7hz" secondAttribute="bottom" constant="9" id="7x4-bZ-R36"/>
                             <constraint firstItem="ef4-Yl-IAu" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="9gg-Zj-iJi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9wP-uO-jX5" secondAttribute="trailing" constant="-20" id="DsR-1L-mMu"/>
                             <constraint firstItem="OJ8-aQ-7hz" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="EON-rz-kky"/>
+                            <constraint firstItem="9wP-uO-jX5" firstAttribute="leading" secondItem="FeJ-eL-AQ3" secondAttribute="leadingMargin" constant="-20" id="G7E-VD-oUr"/>
                             <constraint firstItem="pD9-ZN-66f" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="Hza-Ky-zR1"/>
+                            <constraint firstItem="IcY-Oz-dD4" firstAttribute="top" secondItem="9wP-uO-jX5" secondAttribute="bottom" id="IKp-ur-ng8"/>
                             <constraint firstItem="pD9-ZN-66f" firstAttribute="top" secondItem="xOU-lQ-ENm" secondAttribute="bottom" constant="17" id="IkR-Sh-WyC"/>
                             <constraint firstItem="xOU-lQ-ENm" firstAttribute="top" secondItem="ef4-Yl-IAu" secondAttribute="bottom" constant="20" id="TjZ-Zg-ffn"/>
                             <constraint firstItem="xOU-lQ-ENm" firstAttribute="centerX" secondItem="FeJ-eL-AQ3" secondAttribute="centerX" id="W4b-tg-prD"/>
@@ -237,11 +259,82 @@
                         <outlet property="activityIndicator" destination="pD9-ZN-66f" id="9YA-fl-2Y6"/>
                         <outlet property="imageToPost" destination="OJ8-aQ-7hz" id="xl4-1j-17X"/>
                         <outlet property="shareText" destination="ef4-Yl-IAu" id="lA0-gp-h2z"/>
+                        <segue destination="wLe-Tz-YSE" kind="unwind" identifier="logout" unwindAction="didLogOut:" id="tzv-55-ebp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sb8-Mi-JFj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2763" y="444"/>
+        </scene>
+        <!--Feed Table Table View Controller-->
+        <scene sceneID="91O-tQ-Bbf">
+            <objects>
+                <tableViewController id="fbX-o5-1vI" customClass="FeedTableTableViewController" customModule="Instagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="MFk-pS-jqs">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="250" id="OUf-ow-MHH" customClass="FeedCell" customModule="Instagram" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="250"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OUf-ow-MHH" id="PtF-Q8-b2X">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="249"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Silueta-MAS.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="HJd-Fa-gM9">
+                                            <rect key="frame" x="145" y="0.0" width="321" height="197"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="321" id="TKg-DN-EKo"/>
+                                                <constraint firstAttribute="height" constant="197" id="q17-Xc-cdr"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POG-ds-LxW">
+                                            <rect key="frame" x="8" y="201" width="584" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="UYC-x9-kie"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcf-tI-aJ7">
+                                            <rect key="frame" x="8" y="223" width="584" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="KVo-KB-hLc"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-ThinItalic" family="Helvetica Neue" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rcf-tI-aJ7" firstAttribute="top" secondItem="POG-ds-LxW" secondAttribute="bottom" constant="1" id="42d-eN-VA3"/>
+                                        <constraint firstItem="POG-ds-LxW" firstAttribute="top" secondItem="HJd-Fa-gM9" secondAttribute="bottom" constant="4" id="EbR-iM-5Pn"/>
+                                        <constraint firstItem="rcf-tI-aJ7" firstAttribute="trailing" secondItem="PtF-Q8-b2X" secondAttribute="trailingMargin" id="QaW-KU-zvJ"/>
+                                        <constraint firstItem="HJd-Fa-gM9" firstAttribute="centerX" secondItem="PtF-Q8-b2X" secondAttribute="centerX" id="bEW-hY-gQR"/>
+                                        <constraint firstItem="POG-ds-LxW" firstAttribute="leading" secondItem="PtF-Q8-b2X" secondAttribute="leadingMargin" id="dR7-TG-W8V"/>
+                                        <constraint firstItem="rcf-tI-aJ7" firstAttribute="leading" secondItem="PtF-Q8-b2X" secondAttribute="leadingMargin" id="gAf-Lk-WNy"/>
+                                        <constraint firstItem="POG-ds-LxW" firstAttribute="trailing" secondItem="PtF-Q8-b2X" secondAttribute="trailingMargin" id="vKM-mB-z5u"/>
+                                        <constraint firstItem="HJd-Fa-gM9" firstAttribute="top" secondItem="PtF-Q8-b2X" secondAttribute="topMargin" constant="-8" id="x6r-UL-4aY"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="postImage" destination="HJd-Fa-gM9" id="DkP-R8-QDA"/>
+                                    <outlet property="title" destination="POG-ds-LxW" id="UwI-EB-KZL"/>
+                                    <outlet property="username" destination="rcf-tI-aJ7" id="E4D-fJ-vu9"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="fbX-o5-1vI" id="5y9-WA-eF5"/>
+                            <outlet property="delegate" destination="fbX-o5-1vI" id="qvM-hy-UUU"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="diy-eo-0pP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2097" y="1160"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="eJS-zU-Vu3">

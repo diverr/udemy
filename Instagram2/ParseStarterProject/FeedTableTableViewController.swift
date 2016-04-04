@@ -7,17 +7,58 @@
 //
 
 import UIKit
+import Parse
 
 class FeedTableTableViewController: UITableViewController {
+    
+    var titles: [String] = []
+    var usernames: [String] = []
+    var images: [PFFile] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        // cogemos unicamente los post de los usuarios que estoy siguiendo
+        let getFollowedQuery = PFQuery(className:"followers")
+        getFollowedQuery.whereKey("follower", equalTo: (PFUser.currentUser()!).username! )
+        getFollowedQuery.findObjectsInBackgroundWithBlock {
+            (objects: [PFObject]?, error: NSError?) -> Void in
+            
+            if error == nil {
+                if let objects = objects {
+                    var followedUser = ""
+                    for object in objects {
+                        followedUser = object["following"] as! String
+                        
+                        let query = PFQuery(className:"Post")
+                        query.whereKey("username", equalTo: followedUser)
+                        query.findObjectsInBackgroundWithBlock {
+                            (objects: [PFObject]?, error: NSError?) -> Void in
+                            
+                            if error == nil {
+                                if let objects = objects {
+                                    for object in objects {
+                                        self.titles.append(object["title"] as! String)
+                                        self.usernames.append(object["username"] as! String)
+                                        self.images.append(object["imageFile"] as! PFFile)
+                                    }
+                                    
+                                    self.tableView.reloadData()
+                                }
+                            } else {
+                                print("Error: \(error!) \(error!.userInfo)")
+                            }
+                        }
+                        
+                    }
+                }
+            } else {
+                print("Error: \(error!) \(error!.userInfo)")
+            }
+        }
+        
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,15 +75,23 @@ class FeedTableTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return titles.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FeedCell", forIndexPath: indexPath) as! FeedCell
 
-        cell.title.text = "Título de la publicación"
-        cell.username.text = "Usuario de la publicación"
+        cell.title.text = self.titles[indexPath.row]
+        cell.username.text = self.usernames[indexPath.row]
+        
+        // hacemos esto para que descargue las imágenes en segundo plano
+        self.images[indexPath.row].getDataInBackgroundWithBlock { (imageData: NSData?, error: NSError?) in
+            if error == nil {
+                let image = UIImage(data: imageData!)
+                cell.postImage.image = image
+            }
+        }
 
         return cell
     }
